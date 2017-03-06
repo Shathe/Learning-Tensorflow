@@ -11,11 +11,10 @@ import tensorflow as tf
 # Import MNIST data
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
-logs_path = '/tmp/tensorflow_logs/example'
 # Parameters
 # learning_rate = 0.001
 training_iters = 200000
-batch_size = 125
+batch_size = 50
 display_step = 100
 
 # Network Parameters
@@ -23,6 +22,7 @@ n_input = 784  # data input (MNIST: img shape: 28*28)
 n_classes = 10  # total classes (MNIST: 0-9 digits)
 dropout = 0.5  # dropout, probability to keep units (while training)
 
+sess = tf.InteractiveSession()
 
 # tf Graph input
 x = tf.placeholder(tf.float32, [None, n_input])
@@ -116,73 +116,47 @@ staircase=True)
 
 
 # Construct model
-with tf.name_scope('Model'):
-    pred = conv_net(x, weights, biases, keep_prob)
+pred = conv_net(x, weights, biases, keep_prob)
 
-with tf.name_scope('Loss'):
-    # Define loss and optimizer
-    cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
+# Define loss and optimizer
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
 
+# Evaluate model
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost, global_step=batch)
+# train_step = tf.train.AdamOptimizer(1e-4).minimize(cost, global_step=batch)
 
-with tf.name_scope('SGD'):
-    # Evaluate model
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost, global_step=batch)
-    # train_step = tf.train.AdamOptimizer(1e-4).minimize(cost, global_step=batch)
-
-
-with tf.name_scope('Accuracy'):
-    # correct prediction
-    accuracy = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-    accuracy = tf.reduce_mean(tf.cast(accuracy, tf.float32))
+# correct prediction
+accuracy = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
+accuracy = tf.reduce_mean(tf.cast(accuracy, tf.float32))
 
 
 
 # Initializing the variables
-init = tf.initialize_all_variables()
-# Create a summary to monitor cost tensor
-tf.scalar_summary("loss", cost)
-# Create a summary to monitor accuracy tensor
-tf.scalar_summary("accuracy", accuracy)
-# Merge all summaries into a single op
-merged_summary_op = tf.merge_all_summaries()
+sess.run(tf.global_variables_initializer())
+step = 1
+# Keep training until reach max iterations
+while step * batch_size < training_iters:
+    batch_x, batch_y = mnist.train.next_batch(batch_size)
+    # Run optimization op (backprop)
+    c = sess.run([optimizer], feed_dict={x: batch_x, y: batch_y,
+                                   keep_prob: dropout})
+    if step % display_step == 0:
+        # Calculate batch loss and accuracy
+        loss, acc = sess.run([cost, accuracy], feed_dict={x: batch_x,
+                                                          y: batch_y,
+                                                          keep_prob: 1.})
+        print("Iter " + str(step*batch_size) + ", Minibatch Loss= " + \
+              "{:.6f}".format(loss) + ", Training Accuracy= " + \
+              "{:.5f}".format(acc))
+    # Write logs at every iteration
+    step += 1
+print("Optimization Finished!")
 
-# Launch the graph
-with tf.Session() as sess:
-    sess.run(init)
-    # op to write logs to Tensorboard
-    summary_writer = tf.train.SummaryWriter(logs_path, graph=tf.get_default_graph())
-
-    step = 1
-    # Keep training until reach max iterations
-    while step * batch_size < training_iters:
-        batch_x, batch_y = mnist.train.next_batch(batch_size)
-        # Run optimization op (backprop)
-        c, summary = sess.run([optimizer, merged_summary_op], feed_dict={x: batch_x, y: batch_y,
-                                       keep_prob: dropout})
-        if step % display_step == 0:
-            # Calculate batch loss and accuracy
-            loss, acc = sess.run([cost, accuracy], feed_dict={x: batch_x,
-                                                              y: batch_y,
-                                                              keep_prob: 1.})
-            print("Iter " + str(step*batch_size) + ", Minibatch Loss= " + \
-                  "{:.6f}".format(loss) + ", Training Accuracy= " + \
-                  "{:.5f}".format(acc))
-        # Write logs at every iteration
-        summary_writer.add_summary(summary, step)
-        step += 1
-    print("Optimization Finished!")
-
-    # Calculate accuracy for 1000 mnist test images
-    print("Testing Accuracy:", \
-        sess.run(accuracy, feed_dict={x: mnist.test.images[:1000],
-                                      y: mnist.test.labels[:1000],
-                                      keep_prob: 1.}))
-
-    print("Run the command line:\n" \
-          "--> tensorboard --logdir=/tmp/tensorflow_logs " \
-          "\nThen open http://0.0.0.0:6006/ into your web browser")
-
-
+# Calculate accuracy for 1000 mnist test images
+print("Testing Accuracy:", \
+    sess.run(accuracy, feed_dict={x: mnist.test.images[:1000],
+                                  y: mnist.test.labels[:1000],
+                                  keep_prob: 1.}))
 
 
 

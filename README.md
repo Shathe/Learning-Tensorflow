@@ -1,4 +1,4 @@
-﻿﻿# Learning-Tensorflow
+# Learning-Tensorflow
 
 The main aim of this project is to learn tensorflow framework. I will start almost from scratch, I am taking the MNIST example (edited by me adding some other stuff) and I will work on it.
 

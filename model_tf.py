@@ -16,6 +16,7 @@ mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 training_iters = 200000
 batch_size = 50
 display_step = 100
+learning_rate = 0.001
 
 # Network Parameters
 n_input = 784  # data input (MNIST: img shape: 28*28)
@@ -104,6 +105,7 @@ biases = {
 }
 
 #CoupledDecay learning rate
+'''
 batch = tf.Variable(0)
 
 learning_rate = tf.train.exponential_decay(
@@ -112,7 +114,7 @@ batch * batch_size, # Current index into the dataset.
 training_iters/50, # Decay step.
 0.95, # Decay rate.
 staircase=True)
-
+'''
 
 
 # Construct model
@@ -122,7 +124,7 @@ pred = conv_net(x, weights, biases, keep_prob)
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
 
 # Evaluate model
-optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost, global_step=batch)
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 # train_step = tf.train.AdamOptimizer(1e-4).minimize(cost, global_step=batch)
 
 # correct prediction
@@ -159,6 +161,3 @@ print("Testing Accuracy:", \
                                   keep_prob: 1.}))
 
 
-
-#Anadir una capa mas tan solo es anadir sus pesos y bias (viendo que las dimensiones se corresponden) y anadiendo la
-#convolucion en el modelo (cudado con el poolin que quita dimensionadlidad)

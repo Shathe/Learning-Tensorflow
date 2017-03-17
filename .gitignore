@@ -3,3 +3,4 @@ checkpoint*
 MNIST*
 *~
 model_tfl.py
+data

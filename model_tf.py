@@ -105,26 +105,28 @@ biases = {
 }
 
 #CoupledDecay learning rate
-'''
-batch = tf.Variable(0)
 
-learning_rate = tf.train.exponential_decay(
-0.003, # Base learning rate.
-batch * batch_size, # Current index into the dataset.
-training_iters/50, # Decay step.
-0.95, # Decay rate.
-staircase=True)
 '''
-
+global_step = tf.Variable(0, trainable=False)
+starter_learning_rate = 0.1
+learning_rate = tf.train.exponential_decay(starter_learning_rate, global_step,
+                                           100000, 0.96, staircase=True)
+# Passing global_step to minimize() will increment it at each step.
+learning_step = (
+    tf.train.GradientDescentOptimizer(learning_rate)
+    .minimize(...my loss..., global_step=global_step)
+)
+'''
 
 # Construct model
 pred = conv_net(x, weights, biases, keep_prob)
 
 # Define loss and optimizer
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
 # Evaluate model
-optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost, global_step=global_step)
 # train_step = tf.train.AdamOptimizer(1e-4).minimize(cost, global_step=batch)
 
 # correct prediction

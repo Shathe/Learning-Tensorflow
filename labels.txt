@@ -1,0 +1,6 @@
+beach, beach landscape, beach paradise, beach holiday, beach people tourism, playa paisaje
+forest, forest landscape, bosque paisaje, forest holiday, summer forest
+mountain, mountain landscape, mountain paradise, mountain holiday, mountain people tourism, montaña paisaje, snow mountain, summer mountain
+city street, calle ciudad, city street people, calle ciudad gente, city street buildings, calle ciudad edificios
+village street, pueblo calles,village streets, pueblo calle, spanish village, english village
+building inside, edificio interior, office inside, interior oficina, mall inside, casa moderna interior, piso interior

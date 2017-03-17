@@ -9,6 +9,8 @@ First of all, I will set some steps/aims (related to the stuff I want to learn).
 - [ ] Choose what to Classify
 - [ ] Load the data. Whether with the [tensorflow API](https://www.tensorflow.org/programmers_guide/reading_data) or just create a function which loads a random image/batch from a random labels, inside the main training loop, see [this example](https://github.com/asabater94/exeinos-uCode-2017/tree/master/ML), or numpy, or [DIY](http://stackoverflow.com/questions/34340489/tensorflow-read-images-with-labels) loading the filepath and label and just [reading](http://stackoverflow.com/questions/39195113/how-to-load-multiple-images-in-a-numpy-array ) the batch when needed with a nextBatch funtion
 - [ ] Save and load the model in order to finetune and not to loose the training.
+- [ ] Make a test script which gives both the predicted label and the probability.
+- [ ] See the differences between adamOpt & GradientDescentOptimizer with lr decay
 - [ ] Create a parallel version with either [Keras](https://keras.io/) or [Tflearn](http://tflearn.org/)
 - [ ] Do a pre-processing of the data: Own cropping (depending the needs of the data set), data augmentation, mean substraction...
 - [ ] Change the different layers (see other CNN's like VGG, imagenet, alexnet, Inception-v3, cifar10...) or try other [specific solutions] (http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html#43494641522d313030)

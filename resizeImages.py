@@ -1,15 +1,8 @@
-from bs4 import BeautifulSoup
-import urllib2
 import os
 import glob
 import argparse
 import PIL
 from PIL import Image
-
-
-def get_soup(url, header):
-    return BeautifulSoup(urllib2.urlopen(urllib2.Request(url, headers=header)), 'html.parser')
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataFolder", help="folder where the images are going to be saved")
@@ -18,6 +11,8 @@ parser.add_argument("--height", help="height for the images to resize")
 args = parser.parse_args()
 DATA_FILE_NAME = args.dataFolder
 WIDTH = args.width
+DATA_FILE_NAME_TEST = DATA_FILE_NAME + "/test"
+DATA_FILE_NAME_TRAIN = DATA_FILE_NAME + "/train"
 HEIGHT = args.height
 # Read each label
 with open("labels.txt") as f:
@@ -28,11 +23,25 @@ labels = [x.strip() for x in content]
 for label in labels:
     # Creates a directory for each label
     all_names = label.split(',')
-    name = all_names[0]
+    name = all_names[0].replace(' ', '_')
+    print(name)
 
-    LABEL_PATH = os.path.join(DATA_FILE_NAME, name)
+    LABEL_PATH = os.path.join(DATA_FILE_NAME_TRAIN, name)
     for image in glob.glob(LABEL_PATH + "/*"):
-        print image
-        img = Image.open(image)
-        img = img.resize((int(WIDTH), int(HEIGHT)), PIL.Image.ANTIALIAS)
-        img.save(image)
+        print(image)
+        try:
+            img = Image.open(image)
+            img = img.resize((int(WIDTH), int(HEIGHT)), PIL.Image.ANTIALIAS)
+            img.save(image)
+        except:
+            os.remove(image)
+
+    LABEL_PATH = os.path.join(DATA_FILE_NAME_TEST, name)
+    for image in glob.glob(LABEL_PATH + "/*"):
+        print(image)
+        try:
+            img = Image.open(image)
+            img = img.resize((int(WIDTH), int(HEIGHT)), PIL.Image.ANTIALIAS)
+            img.save(image)
+        except:
+            os.remove(image)

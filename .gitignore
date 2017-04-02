@@ -2,5 +2,8 @@ model-*
 checkpoint*
 MNIST*
 *~
-model_tfl.py
 data
+weights*
+*.ckpt*
+*.index
+*.data*

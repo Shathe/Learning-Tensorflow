@@ -37,5 +37,5 @@ I code both of them but I am going to work only with Keras because it gives more
 
 In order to execute it code:
 ```
-python model_keras.py --dataFolder data --files  . --width 160 --height 120
+python model_keras.py --dataFolder data --files  . --width 160 --height 120 # --files is the folder where labels.txt is. --dataFolder is where the test and train directory are with your training and test images.
 ```

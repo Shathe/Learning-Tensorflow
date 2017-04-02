@@ -63,17 +63,17 @@ adam = optimizers.adam(lr=learning_rate)
 model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
 
 # this is the augmentation configuration we will use for training
-train_datagen = ImageDataGenerator(rescale=1. / 255, shear_range=0.2, zoom_range=0.2, horizontal_flip=True)
+train_datagen = ImageDataGenerator(rescale=1. / 255, shear_range=0.2, zoom_range=0.2, horizontal_flip=True, rotation_range=90)
 # Other options:rotation_range, height_shift_range, featurewise_center, vertical_flip, featurewise_std_normalization...
 
 # this is the augmentation configuration we will use for testing:
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 
 train_generator = train_datagen.flow_from_directory(train_data_dir, target_size=(img_width, img_height),
-                                                    batch_size=batch_size, class_mode='categorical')
+                                                    batch_size=batch_size, class_mode='categorical', shuffle=True)
 
 validation_generator = test_datagen.flow_from_directory(validation_data_dir, target_size=(img_width, img_height),
-                                                        batch_size=batch_size, class_mode='categorical')
+                                                        batch_size=batch_size, class_mode='categorical', shuffle=True)
 try:
     model.load_weights('weights.hdf5')
     print("Weights loaded")

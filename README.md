@@ -9,9 +9,9 @@ First of all, I will set some steps/aims (related to the stuff I want to learn).
 - [x] Choose what to Classify
 - [x] Load the data.
 - [x] Have 2 versions: Keras & TFLearn
-- [ ] Save and load the model in order to finetune and not to loose the training.
-- [ ] Predict. Make a test script which gives both the predicted label and the probability.
-- [ ] Do image augmentation with the API's
+- [x] Save and load the model in order to finetune and not to loose the training.
+- [x] Do image augmentation with the API's
+- [ ] Predict. Make a test script which gives both the predicted label and the probability. In both Keras and TFlearn.
 - [ ] Change the different layers (see other CNN's like VGG, imagenet, alexnet, Inception-v3, cifar10...) [keras](https://github.com/fchollet/deep-learning-models) or [tflearn](https://github.com/tflearn/tflearn/tree/master/examples/images)
 - [ ] Try to set up a siamesse network [TFLearn](https://github.com/tflearn/tflearn/issues/544) and[Keras](https://github.com/fchollet/keras/blob/master/examples/mnist_siamese_graph.py)
 - [ ] Try with some well-known CNN and finetuning
@@ -37,5 +37,7 @@ I code both of them but I am going to work only with Keras because it gives more
 
 In order to execute it code:
 ```
-python model_keras.py --dataFolder data --files  . --width 160 --height 120 # --files is the folder where labels.txt is. --dataFolder is where the test and train directory are with your training and test images.
+python model_keras.py --dataFolder data --files  . --width 160 --height 120
 ```
+--files is the folder where labels.txt is. --dataFolder is where the test and train directory are with your training and test images.
+

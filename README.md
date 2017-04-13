@@ -12,12 +12,14 @@ First of all, I will set some steps/aims (related to the stuff I want to learn).
 - [x] Save and load the model in order to finetune and not to loose the training.
 - [x] Do image augmentation with the API's
 - [ ] Predict. Make a test script which gives both the predicted label and the probability. In both Keras and TFlearn.
+- [ ] Keep the code clean and refactored.
 - [ ] Change the different layers (see other CNN's like VGG, imagenet, alexnet, Inception-v3, cifar10...) [keras](https://github.com/fchollet/deep-learning-models) or [tflearn](https://github.com/tflearn/tflearn/tree/master/examples/images)
 - [ ] Try to set up a siamesse network [TFLearn](https://github.com/tflearn/tflearn/issues/544) and[Keras](https://github.com/fchollet/keras/blob/master/examples/mnist_siamese_graph.py)
 - [ ] Try with some well-known CNN and finetuning
 - [ ] [Specify the gpu to use inside the code](https://www.tensorflow.org/tutorials/using_gpu)
 - [ ] Show some filters, like [first conv filters](http://stackoverflow.com/questions/35759220/how-to-visualize-learned-filters-on-tensorflow)
 - [ ] Make a distributed version
+- [ ] Learn different types of NN: [first](https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition) [second](http://machinelearningmastery.com/time-series-prediction-with-deep-learning-in-python-with-keras/)
 
 ## Image colletor. Scrapping the web. Automatizing the process
 The collecting data system is being automatized. The data is collected via google searches and is goint to be saved in a test & train directory as well as in one folder per each label. Each line ofthe [lables files](https://github.com/Shathe/Learning-Tensorflow/blob/master/labels.txt) is going to be a label to classify. In each line are more than one possible query, each one separated by comas.

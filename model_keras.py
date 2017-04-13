@@ -7,6 +7,8 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.layers import Conv2D, MaxPooling2D
 from keras.models import Sequential
 from keras.preprocessing.image import ImageDataGenerator
+from scipy import misc
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataFolder", help="folder where the images are going to be saved")
@@ -21,9 +23,9 @@ train_data_dir = args.dataFolder + '/train'
 validation_data_dir = args.dataFolder + '/test'
 train_file = args.files + '/train.txt'
 test_file = args.files + '/test.txt'
-epochs = 50
+epochs = 30
 batch_size = 16
-learning_rate = 0.0001
+learning_rate = 0.00001
 n_channels = 3
 n_classes = sum(1 for line in open(args.files + '/labels.txt'))  # total classes
 dropout_rate = 0.5  # dropout, probability to keep units (while training)
@@ -39,6 +41,12 @@ if K.image_data_format() == 'channels_first':
 else:
     #Tensorflow backend
     input_shape = (img_width, img_height, n_channels)
+
+
+def get_label(dict, index):
+    for label, index_dict in dict.iteritems():
+        if index == index_dict:
+            return label
 
 # Network
 model = Sequential()
@@ -73,6 +81,7 @@ train_generator = train_datagen.flow_from_directory(train_data_dir, target_size=
                                                     batch_size=batch_size, class_mode='categorical', shuffle=True)
 
 validation_generator = test_datagen.flow_from_directory(validation_data_dir, target_size=(img_width, img_height),
+
                                                         batch_size=batch_size, class_mode='categorical', shuffle=True)
 try:
     model.load_weights('weights.hdf5')
@@ -85,7 +94,7 @@ try:
 except:
     pass
 
-checkpoint = ModelCheckpoint('weights.h5', monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+checkpoint = ModelCheckpoint('weights.hdf5', monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 
 model.fit_generator(train_generator, steps_per_epoch=nb_train_samples // batch_size, epochs=epochs,
                     validation_data=validation_generator, validation_steps=nb_validation_samples // batch_size,
@@ -95,4 +104,23 @@ score = model.evaluate_generator(validation_generator, nb_validation_samples)
 
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
-model.save_weights('weights_final.h5')
+model.save_weights('weights_final.hdf5')
+
+# Predicts what an iamge is given its path
+def predict_image(image_path):
+    # Read the image, rescale and reshape it (as the neural network expects it)
+    image = misc.imread(image_path)
+    image = misc.imresize(image, input_shape)
+    image = np.reshape(image, (1, img_width, img_height, n_channels))
+    print(model.predict(image))
+    prediction = model.predict(image)
+    # Prediction of the first and the only image predicted
+    prediction = prediction[0]
+    index = np.argmax(prediction)
+    prob = prediction[index]
+    label = get_label(validation_generator.class_indices, index)
+    print("Prediction:  " + str(label) + " with probability: " + str(prob * 100))
+
+# Test given an image
+predict_image(validation_data_dir + '/mountain/_mountain_landscape_131.jpg')
+

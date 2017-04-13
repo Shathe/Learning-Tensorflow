@@ -11,6 +11,8 @@ from tflearn.data_utils import image_preloader
 from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
+from scipy import misc
+import numpy as np
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--files", help="folder where the training files are placed (labels.txt, train.txt, test.txt...)")
@@ -31,15 +33,15 @@ batch_size = 32
 display_step = 100
 learning_rate = 0.0001
 dropout_rate = 0.5  # dropout, probability to keep units (while training)
-n_epochs = 200
+n_epochs = 5
 snapshot_steps = 2000
 
 
 print("num images to train: " + str(sum(1 for line in open(train_file))))
 print("num images to test: " + str(sum(1 for line in open(test_file))))
 
-X, Y = image_preloader(train_file, image_shape=(width, height, n_classes), mode='file', categorical_labels=True, normalize=True)
-testX, testY = image_preloader(test_file, image_shape=(width, height, n_classes), mode='file', categorical_labels=True, normalize=True)
+X, Y = image_preloader(train_file, image_shape=(width, height, n_channels), mode='file', categorical_labels=True, normalize=True)
+testX, testY = image_preloader(test_file, image_shape=(width, height, n_channels), mode='file', categorical_labels=True, normalize=True)
 
 '''
 You can now apply some utils operations such us: image augmentation which is actually done in this example.
@@ -91,3 +93,27 @@ model.fit(X, Y, n_epoch=n_epochs, shuffle=True, validation_set=(testX, testY),
 
 # Manually save model
 model.save("model.tfl")
+
+
+print("Total and final accuracy test: " + str(model.evaluate(testX, testY)[0]))
+image = misc.imread('/home/shathe/Escritorio/Learning-Tensorflow/data/train/forest/forest_1.jpg')
+image = misc.imresize(image, ( height, width, n_channels))
+image = np.reshape(image, (1,height, width,n_channels))
+#Pick the probability and label of the first and only image.
+probs_img = model.predict(image.astype('float64'))[0]
+labels_img = model.predict_label(image.astype('float64'))[0]
+#As the result is given order by probability there is no need to use argmax, only to pick the ferst element
+prob = probs_img[0]
+label = labels_img[0]
+# Read the labels file in order to know what the label number stands for
+with open(args.files + '/labels.txt') as f:
+    content = f.readlines()
+# you may also want to remove whitespace characters like `\n` at the end of each line
+content = [x.strip() for x in content]
+label = content[label].split(',')[0]
+
+print("Prediction:  " + str(label) + " with probability: " + str(prob * 100))
+
+
+
+

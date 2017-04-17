@@ -11,11 +11,8 @@ First of all, I will set some steps/aims (related to the stuff I want to learn).
 - [x] Have 2 versions: Keras & TFLearn
 - [x] Save and load the model in order to finetune and not to loose the training.
 - [x] Do image augmentation with the API's
-- [ ] Predict. Make a test script which gives both the predicted label and the probability. In both Keras and TFlearn.
-- [ ] Keep the code clean and refactored.
-- [ ] Change the different layers (see other CNN's like VGG, imagenet, alexnet, Inception-v3, cifar10...) [keras](https://github.com/fchollet/deep-learning-models) or [tflearn](https://github.com/tflearn/tflearn/tree/master/examples/images)
-- [ ] Try to set up a siamesse network [TFLearn](https://github.com/tflearn/tflearn/issues/544) and[Keras](https://github.com/fchollet/keras/blob/master/examples/mnist_siamese_graph.py)
-- [ ] Try with some well-known CNN and finetuning
+- [x] Predict. Make a test script which gives both the predicted label and the probability. In both Keras and TFlearn.
+- [ ] Try with some well-known CNN and finetuning (see other CNN's like VGG, imagenet, alexnet, Inception-v3, cifar10...) [keras](https://github.com/fchollet/deep-learning-models) or [tflearn](https://github.com/tflearn/tflearn/tree/master/examples/images)
 - [ ] [Specify the gpu to use inside the code](https://www.tensorflow.org/tutorials/using_gpu)
 - [ ] Show some filters, like [first conv filters](http://stackoverflow.com/questions/35759220/how-to-visualize-learned-filters-on-tensorflow)
 - [ ] Make a distributed version
@@ -41,5 +38,10 @@ In order to execute it code:
 ```
 python Keras/model_keras.py --dataFolder data --files  . --width 160 --height 120
 ```
---files is the folder where labels.txt is. --dataFolder is where the test and train directory are with your training and test images.
+Where --files is the folder where labels.txt is. --dataFolder is where the test and train directory are with your training and test images.
 
+In order to predict what an image is just code:
+```
+python Keras/predict_keras.py --dataFolder data --files  . --width 160 --height 120 --imagePath image.jpg
+```
+Where the image.jpg is the path to the image

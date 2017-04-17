@@ -96,10 +96,10 @@ for label in labels:
                 req = urllib2.Request(img, headers={'User-Agent': header})
                 raw_img = urllib2.urlopen(req).read()
                 # percentage_train out of 1 will be save in the training folder
-                PATH_TO_SAVE = LABEL_PATH_TRAIN
+                path_to_save = LABEL_PATH_TRAIN
                 f_writer = f_train
                 if random.uniform(0, 1) > percentage_train:
-                    PATH_TO_SAVE = LABEL_PATH_TEST
+                    path_to_save = LABEL_PATH_TEST
                     f_writer = f_test
 
                 if cntr % 20 == 0:
@@ -108,7 +108,7 @@ for label in labels:
 
                 download = False
                 # Only save jpg or png or jpeg
-                nameFile = os.path.join(PATH_TO_SAVE, name_i.replace(' ', '_') + "_" + str(cntr) + ".jpg")
+                nameFile = os.path.join(path_to_save, name_i.replace(' ', '_') + "_" + str(cntr) + ".jpg")
 
                 if len(Type) == 0:
                     if "jpg" in raw_img and "body" not in raw_img:

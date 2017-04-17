@@ -26,11 +26,11 @@ The collecting data system is being automatized. The data is collected via googl
 
 In order to download all the images this command has to be executed:
 ```
-python getData.py --dataFolder data # data is the folder to download the images
+python Utils/getData.py --dataFolder data # data is the folder to download the images
 ```
 Then you can resize all the images just like this:
 ```
-python resizeImages.py --dataFolder data --width 160 --heigh 120
+python Utils/resizeImages.py --dataFolder data --width 160 --heigh 120
 ```
 
 ## Keras and TFLearn models.
@@ -39,7 +39,7 @@ I code both of them but I am going to work only with Keras because it gives more
 
 In order to execute it code:
 ```
-python model_keras.py --dataFolder data --files  . --width 160 --height 120
+python Keras/model_keras.py --dataFolder data --files  . --width 160 --height 120
 ```
 --files is the folder where labels.txt is. --dataFolder is where the test and train directory are with your training and test images.
 

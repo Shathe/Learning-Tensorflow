@@ -8,3 +8,5 @@ weights*
 *.index
 *.data*
 *.meta*
+Keras/*.hd*
+Tflearn/*.tfl*

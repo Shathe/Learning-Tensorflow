@@ -19,7 +19,7 @@ First of all, I will set some steps/aims (related to the stuff I want to learn).
 - [ ] [Specify the gpu to use inside the code](https://www.tensorflow.org/tutorials/using_gpu)
 - [ ] Show some filters, like [first conv filters](http://stackoverflow.com/questions/35759220/how-to-visualize-learned-filters-on-tensorflow)
 - [ ] Make a distributed version
-- [ ] Learn different types of NN: [first](https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition) [second](http://machinelearningmastery.com/time-series-prediction-with-deep-learning-in-python-with-keras/)
+- [ ] Learn different types of NN. First of all learn about RNN and LTSM (theory), then try: [first](https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition) [second](http://machinelearningmastery.com/time-series-prediction-with-deep-learning-in-python-with-keras/)
 
 ## Image colletor. Scrapping the web. Automatizing the process
 The collecting data system is being automatized. The data is collected via google searches and is goint to be saved in a test & train directory as well as in one folder per each label. Each line ofthe [lables files](https://github.com/Shathe/Learning-Tensorflow/blob/master/labels.txt) is going to be a label to classify. In each line are more than one possible query, each one separated by comas.

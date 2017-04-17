@@ -12,10 +12,10 @@ First of all, I will set some steps/aims (related to the stuff I want to learn).
 - [x] Save and load the model in order to finetune and not to loose the training.
 - [x] Do image augmentation with the API's
 - [x] Predict. Make a test script which gives both the predicted label and the probability. In both Keras and TFlearn.
-- [ ] Try with some well-known CNN and finetuning (see other CNN's like VGG, imagenet, alexnet, Inception-v3, cifar10...) [keras](https://github.com/fchollet/deep-learning-models) or [tflearn](https://github.com/tflearn/tflearn/tree/master/examples/images)
-- [ ] [Specify the gpu to use inside the code](https://www.tensorflow.org/tutorials/using_gpu)
+- [x] Try with some well-known CNN and finetuning (see other CNN's like VGG, imagenet, alexnet, Inception-v3, cifar10...) [keras](https://github.com/fchollet/deep-learning-models) or [tflearn](https://github.com/tflearn/tflearn/tree/master/examples/images)
+- [x] [Specify the gpu to use inside the code](https://www.tensorflow.org/tutorials/using_gpu)
 - [ ] Show some filters, like [first conv filters](http://stackoverflow.com/questions/35759220/how-to-visualize-learned-filters-on-tensorflow)
-- [ ] Make a distributed version
+- [ ] Try to learn differents objets like different cars models
 - [ ] Learn different types of NN. First of all learn about RNN and LTSM (theory), then try: [first](https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition) [second](http://machinelearningmastery.com/time-series-prediction-with-deep-learning-in-python-with-keras/)
 
 ## Image colletor. Scrapping the web. Automatizing the process

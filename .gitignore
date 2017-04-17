@@ -9,4 +9,6 @@ weights*
 *.data*
 *.meta*
 Keras/*.hd*
+Keras/*.h5*
+Keras/*/*.h5*
 Tflearn/*.tfl*

@@ -26,8 +26,14 @@ epochs = 30
 batch_size = 16
 learning_rate = 0.00001
 n_channels = 3
-n_classes = sum(1 for line in open(args.files + '/labels.txt'))  # total classes
 dropout_rate = 0.5  # dropout, probability to keep units (while training)
+
+import os
+n_classes = 0
+
+for _, dirnames, _ in os.walk(train_data_dir):
+  # ^ this idiom means "we won't be using this value"
+    n_classes += len(dirnames)
 
 nb_train_samples = sum(1 for line in open(train_file))
 nb_validation_samples = sum(1 for line in open(test_file))

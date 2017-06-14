@@ -28,13 +28,13 @@ batch_size = 16
 learning_rate = 0.00001
 n_channels = 3
 dropout_rate = 0.5  # dropout, probability to keep units (while training)
-
 import os
 n_classes = 0
 
 for _, dirnames, _ in os.walk(train_data_dir):
   # ^ this idiom means "we won't be using this value"
     n_classes += len(dirnames)
+
 
 if K.image_data_format() == 'channels_first':
     # Theano backend
@@ -43,22 +43,27 @@ else:
     # Tensorflow backend
     input_shape = (img_width, img_height, n_channels)
 
+
 # Network
 model = Sequential()
-model.add(Conv2D(32, (7, 7), padding='same', activation='relu', input_shape=input_shape,
+model.add(Conv2D(32, (5, 5), padding='same', activation='relu', input_shape=input_shape,
                  kernel_initializer='truncated_normal'))
 model.add(Conv2D(32, (5, 5), padding='same', kernel_initializer='truncated_normal'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
 model.add(Conv2D(64, (5, 5), padding='same', activation='relu', kernel_initializer='truncated_normal'))
-model.add(Conv2D(64, (3, 3), padding='same', activation='relu', kernel_initializer='truncated_normal'))
+model.add(Conv2D(64, (5, 5), padding='same', activation='relu', kernel_initializer='truncated_normal'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
-model.add(Conv2D(128, (5, 5), padding='same', activation='relu', kernel_initializer='truncated_normal'))
+model.add(Conv2D(64, (3, 3), padding='same', activation='relu', input_shape=input_shape,
+                 kernel_initializer='truncated_normal'))
+model.add(Conv2D(128, (3, 3), padding='same', kernel_initializer='truncated_normal'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(128, (3, 3), padding='same', activation='relu', kernel_initializer='truncated_normal'))
+model.add(Conv2D(256, (3, 3), padding='same', activation='relu', kernel_initializer='truncated_normal'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 model.add(Flatten())
-model.add(Dense(100, activation='relu'))
+model.add(Dense(256, activation='relu'))
 model.add(Dropout(dropout_rate))
 model.add(Dense(n_classes))
 model.add(Activation('softmax'))

@@ -2,7 +2,7 @@ model-*
 checkpoint*
 MNIST*
 *~
-data
+data*
 weights*
 *.ckpt*
 *.index
